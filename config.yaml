@@ -1,15 +1,15 @@
 # For physics topics, use the specific subtopics, e.g. "Astrophysics"
-topic: "Computer Science"
+topic: "Mathematics"
 # An empty list here will include all categories in a topic
 # Use the natural language names of the topics, found here: https://arxiv.org
 # Including more categories will result in more calls to the large language model
-categories: ["Artificial Intelligence", "Computation and Language", "Machine Learning", "Information Retrieval"]
+categories: [“Number Theory”, “General Topology”, “Geometric Topology”]
 
 # Relevance score threshold. abstracts that receive a score less than this from the large language model
 # will have their papers filtered out.
 #
 # Must be within 1-10
-threshold: 2
+threshold: 3
 
 # A natural language statement that the large language model will use to judge which papers are relevant 
 #
@@ -21,10 +21,8 @@ threshold: 2
 # This can be empty, which just return a full list of papers with no judgement or filtering,
 # in whatever order arXiv responds with.
 interest: |
-  1. AI alignment and AI safety
-  2. Mechanistic interpretability and explainable AI
-  3. Large language model under pressure
-  4. AI Red teaming, deception and misalignment
-  5. RAGs, Information retrieval
-  6. Optimization of LLM and GenAI
-  7. Do not care about specific application, for example, information extraction, summarization, etc.
+  1. quantum modular forms, mock modular forms, harmonic maass forms, or quasimodular forms
+  2. intersection of number theory with topology or mathematical physics
+  3. GPPV Zhat invariant
+  4. Eichler integrals, Eichler cohomology
+  5. Automatically include if authors include any of Ken Ono, Larry Rolen, Kathrin Bringmann, Amanda Folsom, Louisa Liles, Sergei Gukov, Miranda Cheng, Yuta Murakami, Andreas Mono, Gene Kopp, Campbell Wheller, Veronica Fantini, Don Zagier, Sander Zwegers
