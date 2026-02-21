@@ -1,9 +1,9 @@
 # For physics topics, use the specific subtopics, e.g. "Astrophysics"
-topic: "Mathematics"
+topic: math
 # An empty list here will include all categories in a topic
 # Use the natural language names of the topics, found here: https://arxiv.org
 # Including more categories will result in more calls to the large language model
-categories: [“Number Theory”, “General Topology”, “Geometric Topology”]
+categories: [math.NT, math.GN, math.GT]
 
 # Relevance score threshold. abstracts that receive a score less than this from the large language model
 # will have their papers filtered out.
