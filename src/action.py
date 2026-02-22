@@ -322,7 +322,7 @@ if __name__ == "__main__":
 
     # --- Try SendGrid first ---
     if sendgrid_key:
-        sg = SendGridAPIClient(api_key=sendgrid_key)
+        sg = SendGridAPIClient(api_key=sendgrid_key)
         from_email_obj = Email(from_email)
         to_email_obj = To(to_email)
         content = Content("text/html", body)
