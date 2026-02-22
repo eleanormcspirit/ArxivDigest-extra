@@ -328,31 +328,31 @@ if __name__ == "__main__":
         content = Content("text/html", body)
         mail = Mail(from_email_obj, to_email_obj, subject, content)
         mail_json = mail.get()
-        
-        response = sg.client.mail.send.post(request_body=mail_json)
-        if 200 <= response.status_code <= 300:
-            print("Email sent via SendGrid")
-        else:
-            print(f"SendGrid failure: {response.status_code}, {response.text}")
+
+        response = sg.client.mail.send.post(request_body=mail_json)
+        if 200 <= response.status_code <= 300:
+            print("Email sent via SendGrid")
+        else:
+            print(f"SendGrid failure: {response.status_code}, {response.text}")
 
     # --- Fallback to Gmail SMTP ---
     elif from_email and email_password:
-        import smtplib
-        from email.mime.text import MIMEText
-
-        msg = MIMEText(body, "html")
-        msg["Subject"] = subject
-        msg["From"] = from_email
-        msg["To"] = to_email
-
-        try:
-            with smtplib.SMTP("smtp.gmail.com", 587) as server:
-                server.starttls()
-                server.login(from_email, email_password)
-                server.sendmail(from_email, to_email, msg.as_string())
-            print("Email sent via Gmail SMTP")
-        except Exception as e:
-            print(f"Gmail SMTP failed: {e}")
-
-    else:
-        print("No email credentials found. Skipping email.")
+        import smtplib
+        from email.mime.text import MIMEText
+        
+        msg = MIMEText(body, "html")
+        msg["Subject"] = subject
+        msg["From"] = from_email
+        msg["To"] = to_email
+        
+        try:
+            with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                server.starttls()
+                server.login(from_email, email_password)
+                server.sendmail(from_email, to_email, msg.as_string())
+            print("Email sent via Gmail SMTP")
+        except Exception as e:
+            print(f"Gmail SMTP failed: {e}")
+        
+        else:
+            print("No email credentials found. Skipping email.")
