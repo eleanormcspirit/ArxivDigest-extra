@@ -323,12 +323,12 @@ if __name__ == "__main__":
     # --- Try SendGrid first ---
     if sendgrid_key:
         sg = SendGridAPIClient(api_key=sendgrid_key)
-        from_email_obj = Email(from_email)
-        to_email_obj = To(to_email)
-        content = Content("text/html", body)
-        mail = Mail(from_email_obj, to_email_obj, subject, content)
-        mail_json = mail.get()
-
+        from_email_obj = Email(from_email)
+        to_email_obj = To(to_email)
+        content = Content("text/html", body)
+        mail = Mail(from_email_obj, to_email_obj, subject, content)
+        mail_json = mail.get()
+        
         response = sg.client.mail.send.post(request_body=mail_json)
         if 200 <= response.status_code <= 300:
             print("Email sent via SendGrid")
