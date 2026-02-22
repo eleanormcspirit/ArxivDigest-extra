@@ -315,20 +315,44 @@ if __name__ == "__main__":
     today_date = get_date()
     with open(f"digest_{today_date}.html", "w") as f:
         f.write(body)
-    if os.environ.get("SENDGRID_API_KEY", None):
-        sg = SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
-        from_email = Email(from_email)  # Change to your verified sender
-        to_email = To(to_email)
-        subject = date.today().strftime("Personalized arXiv Digest, %d %b %Y")
-        content = Content("text/html", body)
-        mail = Mail(from_email, to_email, subject, content)
-        mail_json = mail.get()
+    subject = date.today().strftime("Personalized arXiv Digest, %d %b %Y")
 
-        # Send an HTTP POST request to /mail/send
-        response = sg.client.mail.send.post(request_body=mail_json)
-        if response.status_code >= 200 and response.status_code <= 300:
-            print("Send test email: Success!")
-        else:
-            print("Send test email: Failure ({response.status_code}, {response.text})")
+    sendgrid_key = os.environ.get("SENDGRID_API_KEY")
+    email_password = os.environ.get("EMAIL_PASSWORD")
+
+    # --- Try SendGrid first ---
+    if sendgrid_key:
+        sg = SendGridAPIClient(api_key=sendgrid_key)
+        from_email_obj = Email(from_email)
+        to_email_obj = To(to_email)
+        content = Content("text/html", body)
+        mail = Mail(from_email_obj, to_email_obj, subject, content)
+        mail_json = mail.get()
+
+        response = sg.client.mail.send.post(request_body=mail_json)
+        if 200 <= response.status_code <= 300:
+            print("Email sent via SendGrid")
+        else:
+            print(f"SendGrid failure: {response.status_code}, {response.text}")
+
+    # --- Fallback to Gmail SMTP ---
+    elif from_email and email_password:
+        import smtplib
+        from email.mime.text import MIMEText
+
+        msg = MIMEText(body, "html")
+        msg["Subject"] = subject
+        msg["From"] = from_email
+        msg["To"] = to_email
+
+        try:
+            with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                server.starttls()
+                server.login(from_email, email_password)
+                server.sendmail(from_email, to_email, msg.as_string())
+            print("Email sent via Gmail SMTP")
+        except Exception as e:
+            print(f"Gmail SMTP failed: {e}")
+
     else:
-        print("No sendgrid api key found. Skipping email")
+        print("No email credentials found. Skipping email.")
