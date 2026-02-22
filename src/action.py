@@ -312,9 +312,10 @@ if __name__ == "__main__":
     threshold = config["threshold"]
     interest = config["interest"]
     body = generate_body(topic, categories, interest, threshold)
-    today_date = get_date()
-    with open(f"digest_{today_date}.html", "w") as f:
+
+    with open("digest.html", "w") as f:
         f.write(body)
+
     subject = date.today().strftime("Personalized arXiv Digest, %d %b %Y")
 
     sendgrid_key = os.environ.get("SENDGRID_API_KEY")
