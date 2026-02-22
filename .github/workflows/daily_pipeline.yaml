@@ -5,11 +5,11 @@ name: Daily pipeline
 
 on:
   workflow_dispatch: {}
-  schedule:
+  #schedule:
     # * is a special character in YAML so you have to quote this string
     # Feel free to change this cron schedule
     # Currently its scheduled for 1:25 pm UTC, Sun-Thurs
-    - cron:  '0 13 * * 1-5'
+    #- cron:  '0 13 * * 1-5'
 
 jobs:
   generate_and_send_digest:
