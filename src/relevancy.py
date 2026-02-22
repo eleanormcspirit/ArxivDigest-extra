@@ -412,7 +412,7 @@ def filter_papers_by_relevance(
                         score = int(score)
                     except (ValueError, TypeError):
                         score = 0
-                remaining_scores[paper] = score
+                remaining_scores[paper["title"]] = score
         
         # Sort the remaining papers by score (descending)
         sorted_papers = sorted(remaining_scores.keys(), key=lambda p: remaining_scores[p], reverse=True)
