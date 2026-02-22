@@ -257,11 +257,17 @@ def generate_body(topic, categories, interest, threshold):
 
         body = "<br><br>".join(
             [
-                f'<b>Subject: </b>{paper["subjects"]}<br><b>Title:</b> <a href="{paper["main_page"]}">{paper["title"]}</a><br><b>Authors:</b> {paper["authors"]}<br>'
-                f'<b>Score:</b> {paper["Relevancy score"]}<br><b>Reason:</b> {paper["Reasons for match"]}<br>'
-                f'<b>Goal:</b> {paper["Goal"]}<br><b>Data</b>: {paper["Data"]}<br><b>Methodology:</b> {paper["Methodology"]}<br>'
-                f'<b>Experiments & Results</b>: {paper["Experiments & Results"]}<br><b>Git</b>: {paper["Git"]}<br>'
-                f'<b>Discussion & Next steps</b>: {paper["Discussion & Next steps"]}'
+                f'<b>Subject: </b>{paper.get("subjects", "N/A")}<br>'
+                f'<b>Title:</b> <a href="{paper.get("main_page", "#")}">{paper.get("title", "N/A")}</a><br>'
+                f'<b>Authors:</b> {paper.get("authors", "N/A")}<br>'
+                f'<b>Score:</b> {paper.get("Relevancy score", "N/A")}<br>'
+                f'<b>Reason:</b> {paper.get("Reasons for match", "Below threshold — included to meet minimum paper count")}<br>'
+                f'<b>Goal:</b> {paper.get("Goal", "Not provided")}<br>'
+                f'<b>Data:</b> {paper.get("Data", "Not provided")}<br>'
+                f'<b>Methodology:</b> {paper.get("Methodology", "Not provided")}<br>'
+                f'<b>Experiments & Results:</b> {paper.get("Experiments & Results", "Not provided")}<br>'
+                f'<b>Git:</b> {paper.get("Git", "Not provided")}<br>'
+                f'<b>Discussion & Next steps:</b> {paper.get("Discussion & Next steps", "Not provided")}'
                 for paper in relevancy
             ]
         )
