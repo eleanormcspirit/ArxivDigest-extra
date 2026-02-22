@@ -412,20 +412,41 @@ def filter_papers_by_relevance(
                         score = int(score)
                     except (ValueError, TypeError):
                         score = 0
-                remaining_scores[paper["title"]] = score
+                remaining_scores[paper["title"]] = {
+                  "paper": paper,
+                  "score": score
+                }
         
         # Sort the remaining papers by score (descending)
-        sorted_papers = sorted(remaining_scores.keys(), key=lambda p: remaining_scores[p], reverse=True)
+        #sorted_papers = sorted(remaining_scores.keys(), key=lambda p: remaining_scores[p], reverse=True)
         
         # Add the highest-scored papers until we reach max_papers or run out of papers
-        papers_to_add = sorted_papers[:max_papers - len(filtered_papers)]
-        for paper in papers_to_add:
-            score = remaining_scores[paper]
+        #papers_to_add = sorted_papers[:max_papers - len(filtered_papers)]
+        #for paper in papers_to_add:
+            #score = remaining_scores[paper]
+            #print(f"Adding paper '{paper['title'][:50]}...' with score {score} (below threshold) to meet minimum paper count")
+            #filtered_papers.append(paper)
+        
+        #print(f"Added {len(papers_to_add)} papers below threshold to reach {len(filtered_papers)} total papers")
+        # Sort remaining papers by score (descending)
+        sorted_titles = sorted(
+            remaining_scores.keys(),
+            key=lambda t: remaining_scores[t]["score"],
+            reverse=True
+        )
+
+        # Add highest-scored papers until reaching max_papers
+        papers_to_add = sorted_titles[:max_papers - len(filtered_papers)]
+
+        for title in papers_to_add:
+            data = remaining_scores[title]
+            paper = data["paper"]
+            score = data["score"]
+
             print(f"Adding paper '{paper['title'][:50]}...' with score {score} (below threshold) to meet minimum paper count")
             filtered_papers.append(paper)
-        
+
         print(f"Added {len(papers_to_add)} papers below threshold to reach {len(filtered_papers)} total papers")
-    
     return filtered_papers
 
 
